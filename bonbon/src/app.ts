@@ -1,5 +1,6 @@
 import { Application, Router } from "oak";
 import { APIController } from "./controllers/apiController.ts";
+import { BonbonController } from "./controllers/bonbonController.ts";
 
 class App {
   private app = new Application();
@@ -8,14 +9,21 @@ class App {
   private router = new Router();
 
   private apiController = new APIController();
+  private bonbonController = new BonbonController();
 
   constructor() {
     // Activate readiness probe endpoint and subroutes
-    this.router.use(
-      "/api",
-      this.apiController.router.routes(),
-      this.apiController.router.allowedMethods(),
-    );
+    this.router
+      .use(
+        "/api",
+        this.apiController.router.routes(),
+        this.apiController.router.allowedMethods(),
+      )
+      .use(
+        "/bonbons",
+        this.bonbonController.router.routes(),
+        this.bonbonController.router.allowedMethods(),
+      );
 
     this.app.use(this.router.routes())
       .use(this.router.allowedMethods());
