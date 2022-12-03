@@ -11,7 +11,7 @@ export class BonbonService extends MockCRUDService<IBonbon> {
         id: randomID,
         dbname: item.dbname || `random-${randomID}`,
         popular: item.popular || false,
-        count: item.count || 0
+        count: item.count || 0,
       };
       addingItems.push(addingItem);
     }
@@ -24,7 +24,7 @@ export class BonbonService extends MockCRUDService<IBonbon> {
   search(query: string) {
     return super.search(
       query,
-      ["id", "name", "description"],
+      ["id", "dbname"],
     );
   }
 
