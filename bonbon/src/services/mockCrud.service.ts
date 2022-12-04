@@ -1,24 +1,24 @@
 import { IBaseObject } from "src/models/base.interface.ts";
 
-export class MockCRUDService<T extends IBaseObject> {
+export abstract class MockCRUDService<T extends IBaseObject> {
   private items: T[] = [];
 
-  add(newItems: T[]) {
+  protected add(newItems: T[]) {
     const addingItems: T[] = [];
     this.items = this.items.concat(newItems);
     return Promise.resolve(addingItems);
   }
 
-  getByIDs = (searchIDs: string[]) => {
+  public getByIDs = (searchIDs: string[]) => {
     const loadedItems = this.items.filter((ele) => searchIDs.includes(ele.id));
     return Promise.resolve(loadedItems);
   };
 
-  getAll = () => {
+  public getAll = () => {
     return Promise.resolve(this.items);
   };
 
-  search(query: string, fields: string[]) {
+  protected search(query: string, fields: string[]) {
     if (this.items.length <= 0) {
       return [] as T[];
     }
@@ -57,7 +57,7 @@ export class MockCRUDService<T extends IBaseObject> {
     );
   }
 
-  update(changedItems: T[]) {
+  protected update(changedItems: T[]) {
     const updatedItems: T[] = [];
 
     for (const item of changedItems) {
@@ -77,7 +77,7 @@ export class MockCRUDService<T extends IBaseObject> {
     );
   }
 
-  deleteByIDs = (searchIDs: string[]) => {
+  public deleteByIDs = (searchIDs: string[]) => {
     let deletedItems: T[] = [];
 
     for (const id of searchIDs) {

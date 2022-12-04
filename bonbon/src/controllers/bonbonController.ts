@@ -26,7 +26,7 @@ export class BonbonController extends AbstractController {
 
     // add
     this.router.post("/", async (ctx) => {
-      let ingressBonbons: any[] = await ctx.request.body().value;
+      const ingressBonbons: any[] = await ctx.request.body().value;
 
       if (!Array.isArray(ingressBonbons)) {
         ctx.response.status = 400;

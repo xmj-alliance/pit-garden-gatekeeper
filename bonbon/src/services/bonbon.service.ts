@@ -2,7 +2,7 @@ import { IBonbon, IInputBonbon } from "src/models/bonbon.interface.ts";
 import { MockCRUDService } from "./mockCrud.service.ts";
 
 export class BonbonService extends MockCRUDService<IBonbon> {
-  async add(newItems: IInputBonbon[]) {
+  public override async add(newItems: IInputBonbon[]) {
     const addingItems: IBonbon[] = [];
 
     for (const item of newItems) {
@@ -21,14 +21,14 @@ export class BonbonService extends MockCRUDService<IBonbon> {
     return addingItems;
   }
 
-  async search(query: string) {
+  public override async search(query: string) {
     return await super.search(
       query,
       ["id", "dbname"],
     );
   }
 
-  async update(changedItems: IInputBonbon[]) {
+  public override async update(changedItems: IInputBonbon[]) {
     const updatingItems = changedItems as IBonbon[];
     return await super.update(updatingItems);
   }
