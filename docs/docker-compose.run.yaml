@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  bonbon:
+    image: ghcr.io/valorad/pit-garden-gatekeeper-bonbon:latest
+    restart: always
+    user: "1000"
+    networks:
+      - main
+
+# Remember to create this docker network manually!
+networks:
+  main:
+    external: true

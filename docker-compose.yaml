@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  bonbon:
+    build:
+      context: ./bonbon
+      dockerfile: ./dockerfile
+    image: ghcr.io/xmj-alliance/pit-garden-gatekeeper-bonbon:latest
