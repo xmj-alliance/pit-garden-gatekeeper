@@ -1,10 +1,17 @@
 # Bonbon server
 
-A deno-based app server.
+A deno-based app server that serves entirely with Bonbons.
 
 ## Data Model
 
-(TODO)
+```typescript
+interface IBonbon {
+  id: string;
+  dbname: string;
+  popular: boolean;
+  count: number;
+}
+```
 
 ## Further development
 
