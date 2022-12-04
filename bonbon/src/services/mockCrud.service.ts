@@ -6,15 +6,16 @@ export class MockCRUDService<T extends IBaseObject> {
   add(newItems: T[]) {
     const addingItems: T[] = [];
     this.items = this.items.concat(newItems);
-    return addingItems;
+    return Promise.resolve(addingItems);
   }
 
   getByIDs = (searchIDs: string[]) => {
-    return this.items.filter((ele) => searchIDs.includes(ele.id));
+    const loadedItems = this.items.filter((ele) => searchIDs.includes(ele.id));
+    return Promise.resolve(loadedItems);
   };
 
   getAll = () => {
-    return this.items;
+    return Promise.resolve(this.items);
   };
 
   search(query: string, fields: string[]) {
@@ -51,7 +52,9 @@ export class MockCRUDService<T extends IBaseObject> {
       }
     }
 
-    return Object.values(itemMap);
+    return Promise.resolve(
+      Object.values(itemMap),
+    );
   }
 
   update(changedItems: T[]) {
@@ -69,8 +72,9 @@ export class MockCRUDService<T extends IBaseObject> {
 
       updatedItems.push(item);
     }
-
-    return updatedItems;
+    return Promise.resolve(
+      updatedItems,
+    );
   }
 
   deleteByIDs = (searchIDs: string[]) => {
@@ -85,6 +89,8 @@ export class MockCRUDService<T extends IBaseObject> {
       deletedItems = deletedItems.concat(deletingItems);
     }
 
-    return deletedItems;
+    return Promise.resolve(
+      deletedItems,
+    );
   };
 }

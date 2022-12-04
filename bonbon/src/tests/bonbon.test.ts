@@ -27,8 +27,8 @@ Deno.test(
 
     const bonbonNameMap: { [name: string]: IBonbon } = {};
 
-    await t.step("add bonbons", () => {
-      const addedBonbons = bonbonService.add(newBonbons);
+    await t.step("add bonbons", async () => {
+      const addedBonbons = await bonbonService.add(newBonbons);
 
       const newIDs: string[] = [];
       for (const bonbon of addedBonbons) {
@@ -36,35 +36,38 @@ Deno.test(
         newIDs.push(bonbon.id);
       }
 
-      const currentBonbons = bonbonService.getByIDs(newIDs);
+      const currentBonbons = await bonbonService.getByIDs(newIDs);
 
       assertEquals(currentBonbons.length, newBonbons.length);
     });
 
-    await t.step("search bonbons", () => {
+    await t.step("search bonbons", async () => {
       // the search function is currently case sensitive
-      const searchedBonbons = bonbonService.search("on");
+      const searchedBonbons = await bonbonService.search("on");
       // Should contain {dbname: "Fistbon"} and {dbname: "Omeon"}
       assertEquals(searchedBonbons.length, 2);
     });
 
-    await t.step("update bonbons", () => {
+    await t.step("update bonbons", async () => {
       const omeon = bonbonNameMap["Omeon"];
 
       omeon.count = 66666;
 
-      const updatedBonbons = bonbonService.update([omeon]);
+      const updatedBonbons = await bonbonService.update([omeon]);
 
       assertEquals(updatedBonbons.length, 1);
       assertEquals(updatedBonbons[0].count, omeon.count);
     });
 
-    await t.step("delete bonbons", () => {
+    await t.step("delete bonbons", async () => {
       const kitrat = bonbonNameMap["Kitrat"];
       const fistbon = bonbonNameMap["Fistbon"];
-      const deletedBonbons = bonbonService.deleteByIDs([kitrat.id, fistbon.id]);
+      const deletedBonbons = await bonbonService.deleteByIDs([
+        kitrat.id,
+        fistbon.id,
+      ]);
       assertEquals(deletedBonbons.length, 2);
-      const remainingBonbons = bonbonService.getAll();
+      const remainingBonbons = await bonbonService.getAll();
       assertEquals(remainingBonbons.length, newBonbons.length - 2);
     });
   },
